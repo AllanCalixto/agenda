@@ -34,4 +34,15 @@ public class PacienteController {
         Paciente paciente = optPaciente.get();
         return ResponseEntity.status(HttpStatus.OK).body(optPaciente.get());
     }
+    @PutMapping
+    public ResponseEntity<Paciente> alterar(@RequestBody Paciente paciente){
+        Paciente pacienteSalvo = pacienteService.salvar(paciente);
+        return ResponseEntity.status(HttpStatus.OK).body(pacienteSalvo);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id){
+        pacienteService.deletar(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
