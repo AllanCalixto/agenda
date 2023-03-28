@@ -2,6 +2,7 @@ package br.com.solvetech.agenda.domain.service;
 
 import br.com.solvetech.agenda.domain.entity.Paciente;
 import br.com.solvetech.agenda.domain.repository.PacienteRepository;
+import br.com.solvetech.agenda.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,9 @@ public class PacienteService {
     private final PacienteRepository pacienteRepository;
 
     public Paciente salvar(Paciente paciente){
+       if(pacienteRepository.existsByCpf(paciente.getCpf())){
+           throw new BusinessException("Cpf já cadastrado!");
+       }
        return pacienteRepository.save(paciente);
     }
     public List<Paciente> listarTodos(){
